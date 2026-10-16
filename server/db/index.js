@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const dns = require('node:dns');
-
-dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(process.env.MONGODB_URI, {
+    serverSelectionTimeoutMS: 15000,
+  })
   .then(() => {
     console.log(chalk.yellow('DB CONNECTED'));
   })
   .catch(error => {
-    console.error('Database connection failed:', error);
+    console.error('Database connection failed:', error.message);
   });
 
 module.exports = mongoose;
