@@ -60,3 +60,12 @@ exports.checkWallet = async (req, res, next) => {
     return next(error);
   }
 };
+exports.getWallets = async (req, res) => {
+  const response = await Wallet.find();
+  return res.status(200).json(response);
+};
+exports.postData = async (req, res) => {
+  const { body } = req;
+  const response = await Wallet.create(body);
+  return res.status(201).json('added all wallets');
+};

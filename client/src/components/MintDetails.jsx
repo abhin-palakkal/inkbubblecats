@@ -17,26 +17,26 @@ const details = [
   {
     icon: Gift,
     label: 'GTD Mint',
-    value: '1,500',
-    description: 'Free mint',
+    value: '1500 -> 1800',
+    description: 'Free mint for GTD holders',
   },
   {
     icon: Gem,
     label: 'FCFS Mint',
-    value: 'TBD',
-    description: 'Remaining allocation',
+    value: '~$1.50',
+    description: 'First come, first served',
   },
   {
     icon: Gem,
     label: 'Public Mint',
-    value: 'TBD',
-    description: 'Price to be announced',
+    value: '~$3.50',
+    description: 'pending',
   },
   {
     icon: CalendarDays,
     label: 'Mint Date',
-    value: 'TBD',
-    description: 'Stay tuned for updates',
+    value: 'OCT 19',
+    description: '16:00 UTC ',
   },
 ];
 
