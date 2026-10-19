@@ -17,7 +17,7 @@ const details = [
   {
     icon: Gift,
     label: 'GTD Mint',
-    value: '1500 -> 1800',
+    value: '1500 - 1800',
     description: 'Free mint for GTD holders',
   },
   {

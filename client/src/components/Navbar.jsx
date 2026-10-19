@@ -6,12 +6,7 @@ import { site } from '../config/site';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [showOpenSeaMessage, setShowOpenSeaMessage] = useState(false);
   const close = () => setOpen(false);
-  const handleOpenSeaClick = () => {
-    close();
-    setShowOpenSeaMessage(true);
-  };
   return (
     <header className="navbar">
       <a className="brand" href="#home" onClick={close}>
@@ -56,30 +51,16 @@ export default function Navbar() {
         </a>
         <a
           className="nav-social"
-          href="#"
+          href={site.openseaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="OpenSea"
           title="OpenSea"
-          onClick={e => {
-            e.preventDefault();
-            handleOpenSeaClick();
-          }}
+          onClick={close}
         >
           <SiOpensea size={22} />
         </a>
       </nav>
-      {showOpenSeaMessage && (
-        <div className="opensea-notice" role="status">
-          <span>OpenSea link coming soon!</span>
-
-          <button
-            type="button"
-            onClick={() => setShowOpenSeaMessage(false)}
-            aria-label="Close message"
-          >
-            <X size={16} />
-          </button>
-        </div>
-      )}
     </header>
   );
 }

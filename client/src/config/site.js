@@ -3,6 +3,6 @@ export const site = {
   supply: '3,333',
   network: 'INK Chain',
   xUrl: 'https://x.com/InkBubbleCats',
-  openseaUrl: '',
+  openseaUrl: 'https://opensea.io/collection/ink-bubble-cats-nft/overview',
   mintUrl: '#wallet-checker',
 };
