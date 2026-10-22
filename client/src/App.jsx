@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import PixelCatArt from './components/PixelCatArt';
-import MintDetails from './components/MintDetails';
-import { SiX, SiOpensea } from '@icons-pack/react-simple-icons';
+import Navbar from './components/Navbar';
+import { SiX } from '@icons-pack/react-simple-icons';
+import MyCats from './components/MyCats';
 import {
   ArrowDown,
   ArrowUpRight,
   Sparkles,
-  Twitter,
   MessageCircle,
   Disc3,
-  Zap,
   Heart,
   Gem,
   Users,
   Cat,
+  Wallet,
+  Image,
 } from 'lucide-react';
-import Navbar from './components/Navbar';
-import WalletChecker from './components/WalletChecker';
+
 import { site } from './config/site';
 import logo from './assets/logo.png';
 
@@ -38,9 +38,9 @@ const roadmap = [
   {
     number: '03',
     title: 'THE INK GAME',
-    text: 'We aim to build a game within the INK ecosystem, bringing Bubble Cats into a new interactive experience. More details will be shared as development progresses.',
-    status: 'GAME IN DEVELOPMENT PLANS',
-    icon: Zap,
+    text: 'We aim to build a game within the INK ecosystem, bringing Bubble Cats into a new interactive experience.',
+    status: 'GAME DEVELOPMENT PLANS',
+    icon: Disc3,
   },
   {
     number: '04',
@@ -61,39 +61,54 @@ function App() {
 
     fetch(`${apiBase}/site-info`)
       .then(response => (response.ok ? response.json() : null))
-      .then(setSiteInfo)
+      .then(data => {
+        if (data) setSiteInfo(data);
+      })
       .catch(() => {});
   }, []);
+
+  const supply = siteInfo?.supply?.toLocaleString?.() || site.supply || '3,333';
 
   return (
     <>
       <Navbar />
 
       <main>
-        {/* HERO SECTION */}
+        {/* HERO */}
         <section className="hero section-wrap" id="home">
           <div className="hero-copy">
             <div className="hero-pill">
-              <span className="pulse-dot" /> A PIXEL CAT UNIVERSE ON INK
+              <span className="pulse-dot" />
+              YOUR PIXEL CAT UNIVERSE ON INK
             </div>
 
             <h1>
-              SMALL CATS.
+              YOUR CATS.
               <br />
-              <span>BIG BUBBLE</span>
+              <span>YOUR WORLD.</span>
               <br />
-              ENERGY<span className="title-period">.</span>
+              INK ENERGY<span className="title-period">.</span>
             </h1>
 
             <p className="hero-description">
-              3,333 pixel cats. Endless bubble energy. Discover Ink Bubble Cats,
-              a colorful pixel universe on INK Chain, powered by the community.
+              Your Ink Bubble Cats journey starts here. Connect your wallet,
+              discover the cats you own, and explore our growing pixel universe
+              on INK Chain.
             </p>
 
             <div className="hero-actions">
-              <a className="button-primary" href="#wallet-checker">
-                CHECK MY WALLET <ArrowUpRight size={17} />
-              </a>
+              <button
+                className="button-primary"
+                type="button"
+                onClick={() =>
+                  document.getElementById('my-cats')?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                  })
+                }
+              >
+                EXPLORE MY CATS <ArrowUpRight size={17} />
+              </button>
 
               <a className="button-secondary" href="#about">
                 EXPLORE <ArrowDown size={16} />
@@ -105,9 +120,7 @@ function App() {
                 <span className="stat-icon">
                   <img src={logo} alt="" className="site-logo-icon" />
                 </span>
-                <strong>
-                  {siteInfo?.supply?.toLocaleString?.() || site.supply}
-                </strong>
+                <strong>{supply}</strong>
                 <small>TOTAL SUPPLY</small>
               </div>
 
@@ -132,28 +145,38 @@ function App() {
           <PixelCatArt />
 
           <div className="hero-bottom-note">
-            <span className="tiny-square" /> NO LOGIN. NO WALLET CONNECT. JUST
-            CHECK.
+            <span className="tiny-square" />
+            CONNECT YOUR WALLET. DISCOVER YOUR CATS.
           </div>
         </section>
 
-        {/* TICKER */}
+        {/* COLLECTION TICKER */}
         <div className="ticker" aria-hidden="true">
           <div>
-            ✦ INK BUBBLE CATS <span>✦</span> PIXEL MAGIC <span>✦</span> CHECK
-            YOUR WALLET <span>✦</span> INK CHAIN <span>✦</span> INK BUBBLE CATS{' '}
-            <span>✦</span> PIXEL MAGIC <span>✦</span> CHECK YOUR WALLET{' '}
-            <span>✦</span>
+            ✦ INK BUBBLE CATS <span>✦</span> YOUR CATS <span>✦</span> INK CHAIN{' '}
+            <span>✦</span> PIXEL MAGIC <span>✦</span> COMMUNITY FIRST{' '}
+            <span>✦</span> INK BUBBLE CATS <span>✦</span>
           </div>
         </div>
 
-        {/* WALLET CHECKER */}
-        <WalletChecker />
+        {/* MY CATS */}
+        <section className="checker-section section-wrap" id="my-cats">
+          <div className="section-kicker">
+            <span className="pixel-dot" />
+            YOUR COLLECTION
+          </div>
 
-        {/* MINT DETAILS */}
-        <MintDetails />
+          <h2 className="section-title">
+            MEET <span>YOUR CATS.</span>
+          </h2>
 
-        {/* ABOUT SECTION */}
+          <p className="hero-description">
+            Connect your wallet to discover your Ink Bubble Cats collection.
+          </p>
+
+          <MyCats />
+        </section>
+        {/* ABOUT */}
         <section className="about-section section-wrap" id="about">
           <div className="about-art">
             <div className="about-orbit orbit-one" />
@@ -170,7 +193,7 @@ function App() {
 
           <div className="about-copy">
             <div className="section-kicker">
-              <span className="pixel-dot" /> A LITTLE ABOUT US
+              <span className="pixel-dot" />A LITTLE ABOUT US
             </div>
 
             <h2 className="section-title">
@@ -186,9 +209,8 @@ function App() {
             </p>
 
             <p>
-              Check your wallet for mint eligibility, discover your allocation,
-              and join our community as we build the Bubble Cats universe
-              together.
+              Explore your collection, discover what you own, and join our
+              community as we build the Bubble Cats universe together.
             </p>
 
             <div className="about-tags">
@@ -199,12 +221,13 @@ function App() {
           </div>
         </section>
 
-        {/* ROADMAP SECTION */}
+        {/* ROADMAP */}
         <section className="roadmap-section section-wrap" id="roadmap">
           <div className="roadmap-heading">
             <div>
               <div className="section-kicker">
-                <span className="pixel-dot" /> THE BIGGER VISION
+                <span className="pixel-dot" />
+                THE BIGGER VISION
               </div>
 
               <h2 className="section-title">
@@ -238,14 +261,13 @@ function App() {
           </div>
 
           <p className="roadmap-disclaimer">
-            Our vision is to grow beyond the collection. Future projects, game
-            development, and holder experiences are planned ambitions and may
-            evolve as the ecosystem develops. Follow our official channels for
-            confirmed announcements.
+            Future projects, game development, and holder experiences are
+            planned ambitions and may evolve as the ecosystem develops. Follow
+            our official channels for confirmed announcements.
           </p>
         </section>
 
-        {/* COMMUNITY SECTION */}
+        {/* COMMUNITY */}
         <section className="community-section">
           <div className="community-inner section-wrap">
             <span className="community-cat">
@@ -273,6 +295,18 @@ function App() {
               >
                 FOLLOW ON <SiX size={18} />
               </a>
+
+              {site.discordUrl && (
+                <a
+                  href={site.discordUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Join the Ink Bubble Cats Discord"
+                >
+                  <MessageCircle size={18} />
+                  DISCORD
+                </a>
+              )}
             </div>
           </div>
         </section>

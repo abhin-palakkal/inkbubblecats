@@ -1,9 +1,11 @@
 const express = require('express');
+const myCatsRoutes = require('./myCatsRoutes');
 const router = express.Router();
 
 const walletRoutes = require('./walletRoutes');
 
 router.use('/wallet', walletRoutes);
+router.use('/my-cats', myCatsRoutes);
 
 router.get('/site-info', (req, res) => {
   res.status(200).json({

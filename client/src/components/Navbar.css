@@ -1,0 +1,349 @@
+/* ================================
+   INK BUBBLE CATS — NAVBAR
+================================ */
+
+.navbar {
+  position: relative;
+  z-index: 100;
+  width: min(1240px, calc(100% - 48px));
+  min-height: 82px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid var(--line, #302d50);
+}
+
+/* Brand */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  color: #f4f0ff;
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.brand-mark {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: var(--pink, #ff74d4);
+  border: 2px solid var(--pink, #ff74d4);
+  box-shadow: 3px 3px 0 #74417c;
+}
+
+.brand-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.brand > span:last-child {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.brand b {
+  color: var(--pink, #ff74d4);
+}
+
+.brand small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted, #a3a0c1);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  letter-spacing: 0.5px;
+}
+
+/* Desktop navigation */
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  min-width: 0;
+  flex: 1;
+}
+
+/* X and OpenSea */
+
+.nav-social {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--cyan, #6ee7f9);
+  background: #111128;
+  border: 1px solid var(--line, #302d50);
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-social:hover {
+  color: var(--pink, #ff74d4);
+  border-color: var(--pink, #ff74d4);
+  transform: translateY(-2px);
+}
+
+/* My Cats */
+
+.my-cats-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 14px;
+  flex-shrink: 0;
+  background: #171731;
+  color: var(--pink, #ff74d4);
+  border: 1px solid var(--pink, #ff74d4);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.my-cats-button:hover {
+  background: var(--pink, #ff74d4);
+  color: #09091a;
+  transform: translateY(-2px);
+}
+
+.my-cats-button:focus-visible,
+.navbar button:focus-visible,
+.navbar a:focus-visible {
+  outline: 2px solid var(--cyan, #6ee7f9);
+  outline-offset: 4px;
+}
+
+/* ConnectWallet component */
+
+.nav-links > .wallet-connect {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-links .wallet-connect-button {
+  width: auto;
+  min-height: 42px;
+  padding: 0 16px;
+  background: var(--pink, #ff74d4);
+  color: #09091a;
+  border: 2px solid var(--pink, #ff74d4);
+  box-shadow: 3px 3px 0 #74417c;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-links .wallet-connect-button:hover {
+  background: #ff9de3;
+  transform: translateY(-1px);
+}
+
+/* Mobile menu toggle — hidden on desktop */
+
+.mobile-menu {
+  display: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 8px;
+  background: #111128;
+  color: #f4f0ff;
+  border: 1px solid var(--line, #302d50);
+  cursor: pointer;
+}
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 1050px) {
+  .navbar {
+    gap: 16px;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand > span:last-child {
+    font-size: 11px;
+  }
+
+  .brand small {
+    font-size: 7px;
+  }
+
+  .nav-links .wallet-connect-button {
+    padding: 0 10px;
+    font-size: 8px;
+  }
+
+  .my-cats-button {
+    padding: 0 10px;
+    font-size: 8px;
+  }
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 760px) {
+  .navbar {
+    width: calc(100% - 32px);
+    min-height: 72px;
+    gap: 12px;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand > span:last-child {
+    font-size: 11px;
+  }
+
+  .brand small {
+    font-size: 7px;
+  }
+
+  .mobile-menu {
+    display: grid;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    z-index: 200;
+    padding: 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    background: #111128;
+    border: 1px solid var(--line, #302d50);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .nav-links.nav-open {
+    display: flex;
+  }
+
+  .nav-links > a:not(.nav-social) {
+    display: flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .nav-links .nav-social {
+    width: 100%;
+    height: 42px;
+    box-sizing: border-box;
+  }
+
+  .nav-links .my-cats-button {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+
+  .nav-links > .wallet-connect {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .nav-links .wallet-connect-button {
+    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
+  }
+}
+
+/* Small phones */
+
+@media (max-width: 380px) {
+  .navbar {
+    width: calc(100% - 24px);
+  }
+
+  .brand {
+    gap: 7px;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand > span:last-child {
+    font-size: 10px;
+  }
+
+  .brand small {
+    font-size: 6px;
+  }
+
+  .mobile-menu {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-social,
+  .my-cats-button,
+  .wallet-connect-button {
+    transition: none;
+  }
+}
