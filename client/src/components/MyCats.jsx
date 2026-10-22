@@ -39,7 +39,7 @@ export default function MyCats() {
 
           const query = params.toString();
           const response = await fetch(
-            `http://localhost:3000/my-cats/${address}${query ? `?${query}` : ''}`
+            `https://inkbubblecats.onrender.com/my-cats/${address}${query ? `?${query}` : ''}`
           );
 
           const data = await response.json();
