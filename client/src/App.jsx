@@ -3,6 +3,8 @@ import PixelCatArt from './components/PixelCatArt';
 import Navbar from './components/Navbar';
 import { SiX } from '@icons-pack/react-simple-icons';
 import MyCats from './components/MyCats';
+import RaffleSection from './components/RaffleSection';
+
 import {
   ArrowDown,
   ArrowUpRight,
@@ -13,8 +15,6 @@ import {
   Gem,
   Users,
   Cat,
-  Wallet,
-  Image,
 } from 'lucide-react';
 
 import { site } from './config/site';
@@ -62,12 +62,18 @@ function App() {
     fetch(`${apiBase}/site-info`)
       .then(response => (response.ok ? response.json() : null))
       .then(data => {
-        if (data) setSiteInfo(data);
+        if (data) {
+          setSiteInfo(data);
+        }
       })
       .catch(() => {});
   }, []);
 
-  const supply = siteInfo?.supply?.toLocaleString?.() || site.supply || '3,333';
+  const supply =
+    siteInfo?.data?.supply?.toLocaleString?.() ||
+    siteInfo?.supply?.toLocaleString?.() ||
+    site.supply ||
+    '3,333';
 
   return (
     <>
@@ -176,6 +182,10 @@ function App() {
 
           <MyCats />
         </section>
+
+        {/* COMMUNITY RAFFLE */}
+        <RaffleSection />
+
         {/* ABOUT */}
         <section className="about-section section-wrap" id="about">
           <div className="about-art">

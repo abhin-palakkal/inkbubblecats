@@ -12,14 +12,18 @@ export default function Navbar() {
 
   const close = () => setOpen(false);
 
-  const openMyCats = () => {
+  const scrollToSection = id => {
     close();
 
-    document.getElementById('my-cats')?.scrollIntoView({
+    document.getElementById(id)?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
   };
+
+  const openMyCats = () => scrollToSection('my-cats');
+
+  const openRaffle = () => scrollToSection('raffle');
 
   return (
     <header className="navbar">
@@ -50,6 +54,10 @@ export default function Navbar() {
 
         <a href="#roadmap" onClick={close}>
           ROADMAP
+        </a>
+
+        <a href="#raffle" onClick={openRaffle}>
+          RAFFLE
         </a>
 
         <a

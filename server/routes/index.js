@@ -1,11 +1,22 @@
 const express = require('express');
-const myCatsRoutes = require('./myCatsRoutes');
-const router = express.Router();
 
 const walletRoutes = require('./walletRoutes');
+const myCatsRoutes = require('./myCatsRoutes');
+const raffleRoutes = require('./raffleRoutes');
+const adminRoutes = require('./adminRoutes');
+const cloudinaryRoutes = require('./cloudinaryRoutes');
+
+const router = express.Router();
+
+console.log('[Routes] Registering API routes...');
 
 router.use('/wallet', walletRoutes);
 router.use('/my-cats', myCatsRoutes);
+router.use('/raffles', raffleRoutes);
+router.use('/admin', adminRoutes);
+router.use('/cloudinary', cloudinaryRoutes);
+
+console.log('[Routes] Cloudinary routes registered at /cloudinary');
 
 router.get('/site-info', (req, res) => {
   res.status(200).json({

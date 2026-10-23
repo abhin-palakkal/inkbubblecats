@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ink Bubble Cats - Wallet Verification Test</title>
+  </head>
+  <body>
+    <h2>Ink Bubble Cats Wallet Verification</h2>
+    <button id="connect">1. Connect MetaMask</button>
+    <button id="verify" disabled>2. Sign Verification Message</button>
+    <pre id="output"></pre>
+
+    <script>
+      const output = document.getElementById('output');
+      const connectButton = document.getElementById('connect');
+      const verifyButton = document.getElementById('verify');
+
+      let walletAddress = '';
+
+      const API = 'http://localhost:3000/raffles';
+
+      connectButton.onclick = async () => {
+        try {
+          if (!window.ethereum) {
+            throw new Error('MetaMask is not installed.');
+          }
+
+          const accounts = await window.ethereum.request({
+            method: 'eth_requestAccounts',
+          });
+
+          walletAddress = accounts[0];
+
+          output.textContent = `Connected wallet: ${walletAddress}`;
+          verifyButton.disabled = false;
+        } catch (error) {
+          output.textContent = error.message;
+        }
+      };
+
+      verifyButton.onclick = async () => {
+        try {
+          verifyButton.disabled = true;
+
+          // Request a fresh nonce from your backend
+          const nonceResponse = await fetch(`${API}/nonce`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ walletAddress }),
+          });
+
+          const nonceResult = await nonceResponse.json();
+
+          if (!nonceResponse.ok || !nonceResult.success) {
+            throw new Error(nonceResult.message || 'Nonce request failed.');
+          }
+
+          const message = nonceResult.data.message;
+
+          // Ask MetaMask to sign the exact server-generated message
+          const signature = await window.ethereum.request({
+            method: 'personal_sign',
+            params: [message, walletAddress],
+          });
+
+          // Send the signature to the backend for verification
+          const verifyResponse = await fetch(`${API}/verify-wallet`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              walletAddress,
+              message,
+              signature,
+            }),
+          });
+
+          const verifyResult = await verifyResponse.json();
+
+          if (!verifyResponse.ok || !verifyResult.success) {
+            throw new Error(
+              verifyResult.message || 'Wallet verification failed.'
+            );
+          }
+
+          // Keep the token only in this page for the next test
+          window.verificationToken = verifyResult.data.verificationToken;
+
+          output.textContent =
+            'Wallet verified successfully!\n\n' +
+            `Wallet: ${verifyResult.data.walletAddress}\n` +
+            `Token lifetime: ${verifyResult.data.expiresIn} seconds\n\n` +
+            'JWT received. Do not share it.';
+        } catch (error) {
+          output.textContent =
+            error.code === 4001
+              ? 'You rejected the MetaMask signature request.'
+              : error.message;
+        } finally {
+          verifyButton.disabled = false;
+        }
+      };
+    </script>
+  </body>
+</html>
