@@ -125,6 +125,7 @@ const Winners = () => {
 
   // Event search
   const [searchTerm, setSearchTerm] = useState('');
+  const [walletSearchTerm, setWalletSearchTerm] = useState('');
 
   // Winner pagination
   const [winnerPage, setWinnerPage] = useState(1);
@@ -211,33 +212,55 @@ const Winners = () => {
     return selectedRaffle.winners.map(getWinnerAddress).filter(Boolean);
   }, [selectedRaffle]);
 
-  // Pagination calculations
+  // Filter the selected event's wallets by full or shortened address.
+  const filteredSelectedWinners = useMemo(() => {
+    const query = walletSearchTerm.trim().toLowerCase();
+
+    if (!query) return selectedWinners;
+
+    return selectedWinners.filter(address => {
+      const fullAddress = address.toLowerCase();
+      const shortenedAddress = shortAddress(address).toLowerCase();
+
+      return fullAddress.includes(query) || shortenedAddress.includes(query);
+    });
+  }, [selectedWinners, walletSearchTerm]);
+
+  // Pagination is calculated after filtering.
   const totalWinnerPages = Math.max(
     1,
-    Math.ceil(selectedWinners.length / winnersPerPage)
+    Math.ceil(filteredSelectedWinners.length / winnersPerPage)
   );
 
-  const currentWinners = selectedWinners.slice(
+  const currentWinners = filteredSelectedWinners.slice(
     (winnerPage - 1) * winnersPerPage,
     winnerPage * winnersPerPage
   );
 
   const firstWinnerNumber =
-    selectedWinners.length === 0 ? 0 : (winnerPage - 1) * winnersPerPage + 1;
+    filteredSelectedWinners.length === 0
+      ? 0
+      : (winnerPage - 1) * winnersPerPage + 1;
 
   const lastWinnerNumber = Math.min(
     winnerPage * winnersPerPage,
-    selectedWinners.length
+    filteredSelectedWinners.length
   );
 
   const openWinners = raffle => {
     setWinnerPage(1);
     setWinnersPerPage(10);
+    setWalletSearchTerm('');
     setSelectedRaffle(raffle);
   };
 
   const changePageSize = value => {
     setWinnersPerPage(Number(value));
+    setWinnerPage(1);
+  };
+
+  const changeWalletSearch = value => {
+    setWalletSearchTerm(value);
     setWinnerPage(1);
   };
 
@@ -463,7 +486,9 @@ const Winners = () => {
 
                     <p className="winners-pagination-info">
                       {selectedWinners.length > 0
-                        ? `Showing ${firstWinnerNumber}-${lastWinnerNumber} of ${selectedWinners.length} winners`
+                        ? walletSearchTerm.trim()
+                          ? `${filteredSelectedWinners.length} matching of ${selectedWinners.length} wallets`
+                          : `Showing ${firstWinnerNumber}-${lastWinnerNumber} of ${selectedWinners.length} winners`
                         : 'No winner wallets available'}
                     </p>
                   </div>
@@ -493,67 +518,99 @@ const Winners = () => {
                   </p>
                 ) : (
                   <>
-                    {/* Paginated wallet list */}
-                    <div className="winners-wallet-list">
-                      {currentWinners.map((address, index) => {
-                        const winnerNumber =
-                          (winnerPage - 1) * winnersPerPage + index + 1;
+                    {/* Search wallets in this raffle */}
+                    <div className="winners-wallet-search">
+                      <Search size={17} />
+                      <input
+                        type="search"
+                        value={walletSearchTerm}
+                        onChange={event =>
+                          changeWalletSearch(event.target.value)
+                        }
+                        placeholder="Find your wallet address..."
+                        aria-label="Search winning wallet addresses"
+                      />
+                      {walletSearchTerm && (
+                        <button
+                          type="button"
+                          onClick={() => changeWalletSearch('')}
+                          aria-label="Clear wallet search"
+                        >
+                          <X size={16} />
+                        </button>
+                      )}
+                    </div>
 
-                        return (
-                          <div
-                            className="winners-wallet"
-                            key={`${address}-${winnerNumber}`}
-                          >
-                            <div>
-                              <span>Winner {winnerNumber}</span>
+                    {filteredSelectedWinners.length === 0 ? (
+                      <p className="winners-no-wallets" role="status">
+                        No matching wallet found in this raffle. Check the
+                        address and try again.
+                      </p>
+                    ) : (
+                      <>
+                        {/* Paginated wallet list */}
+                        <div className="winners-wallet-list">
+                          {currentWinners.map((address, index) => {
+                            const winnerNumber =
+                              (winnerPage - 1) * winnersPerPage + index + 1;
 
-                              <strong title={address}>
-                                {shortAddress(address)}
-                              </strong>
-                            </div>
+                            return (
+                              <div
+                                className="winners-wallet"
+                                key={`${address}-${winnerNumber}`}
+                              >
+                                <div>
+                                  <span>Winner {winnerNumber}</span>
+
+                                  <strong title={address}>
+                                    {shortAddress(address)}
+                                  </strong>
+                                </div>
+
+                                <button
+                                  type="button"
+                                  onClick={() => copyAddress(address)}
+                                >
+                                  Copy
+                                </button>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Pagination controls */}
+                        {totalWinnerPages > 1 && (
+                          <div className="winners-pagination">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setWinnerPage(page => Math.max(1, page - 1))
+                              }
+                              disabled={winnerPage === 1}
+                            >
+                              <ChevronLeft size={17} />
+                              Previous
+                            </button>
+
+                            <span>
+                              Page {winnerPage} of {totalWinnerPages}
+                            </span>
 
                             <button
                               type="button"
-                              onClick={() => copyAddress(address)}
+                              onClick={() =>
+                                setWinnerPage(page =>
+                                  Math.min(totalWinnerPages, page + 1)
+                                )
+                              }
+                              disabled={winnerPage === totalWinnerPages}
                             >
-                              Copy
+                              Next
+                              <ChevronRight size={17} />
                             </button>
                           </div>
-                        );
-                      })}
-                    </div>
-
-                    {/* Pagination controls */}
-                    {totalWinnerPages > 1 && (
-                      <div className="winners-pagination">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setWinnerPage(page => Math.max(1, page - 1))
-                          }
-                          disabled={winnerPage === 1}
-                        >
-                          <ChevronLeft size={17} />
-                          Previous
-                        </button>
-
-                        <span>
-                          Page {winnerPage} of {totalWinnerPages}
-                        </span>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setWinnerPage(page =>
-                              Math.min(totalWinnerPages, page + 1)
-                            )
-                          }
-                          disabled={winnerPage === totalWinnerPages}
-                        >
-                          Next
-                          <ChevronRight size={17} />
-                        </button>
-                      </div>
+                        )}
+                      </>
                     )}
                   </>
                 )}
