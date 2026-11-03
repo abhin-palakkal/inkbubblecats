@@ -4,6 +4,10 @@ import './MyCats.css';
 
 const PAGE_SIZE = 10;
 
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL || 'https://inkbubblecats.onrender.com'
+).replace(/\/$/, '');
+
 export default function MyCats() {
   const { address, isConnected } = useAccount();
 
@@ -17,6 +21,7 @@ export default function MyCats() {
     if (!isConnected || !address) {
       setCats([]);
       setVisibleCount(PAGE_SIZE);
+      setError('');
       return;
     }
 
@@ -38,8 +43,9 @@ export default function MyCats() {
           }
 
           const query = params.toString();
+
           const response = await fetch(
-            `https://inkbubblecats.onrender.com/my-cats/${address}${query ? `?${query}` : ''}`
+            `${API_BASE_URL}/my-cats/${address}${query ? `?${query}` : ''}`
           );
 
           const data = await response.json();
@@ -54,6 +60,7 @@ export default function MyCats() {
 
         setCats(allCats);
       } catch (err) {
+        console.error('My Cats API error:', err);
         setError(err.message || 'Something went wrong');
       } finally {
         setLoading(false);
@@ -76,7 +83,7 @@ export default function MyCats() {
   const visibleCats = filteredCats.slice(0, visibleCount);
 
   return (
-    <section>
+    <section className="my-cats-page">
       <h2>MY BUBBLE CATS</h2>
 
       {!isConnected ? (
@@ -92,7 +99,7 @@ export default function MyCats() {
             value={search}
             onChange={event => {
               setSearch(event.target.value);
-              setVisibleCount(10);
+              setVisibleCount(PAGE_SIZE);
             }}
             aria-label="Search Bubble Cats"
           />
@@ -102,32 +109,40 @@ export default function MyCats() {
           </p>
 
           {loading && <p>Loading all your Bubble Cats...</p>}
-          {error && <p>{error}</p>}
+
+          {error && (
+            <p className="my-cats-error" role="alert">
+              {error}
+            </p>
+          )}
 
           {!loading && !error && filteredCats.length === 0 && (
             <p>No Bubble Cats found.</p>
           )}
 
-          <div className="my-cats-grid">
-            {visibleCats.map(cat => (
-              <article key={cat.tokenId} className="my-cat-card">
-                <img
-                  src={cat.image}
-                  alt={cat.name || `BUBBLE CATS #${cat.tokenId}`}
-                  loading="lazy"
-                />
-                <h3>{cat.name || `BUBBLE CATS #${cat.tokenId}`}</h3>
+          {!loading && !error && (
+            <div className="my-cats-grid">
+              {visibleCats.map(cat => (
+                <article key={cat.tokenId} className="my-cat-card">
+                  <img
+                    src={cat.image}
+                    alt={cat.name || `BUBBLE CATS #${cat.tokenId}`}
+                    loading="lazy"
+                  />
 
-                {cat.openseaUrl && (
-                  <a href={cat.openseaUrl} target="_blank" rel="noreferrer">
-                    View on OpenSea
-                  </a>
-                )}
-              </article>
-            ))}
-          </div>
+                  <h3>{cat.name || `BUBBLE CATS #${cat.tokenId}`}</h3>
 
-          {!loading && visibleCount < filteredCats.length && (
+                  {cat.openseaUrl && (
+                    <a href={cat.openseaUrl} target="_blank" rel="noreferrer">
+                      View on OpenSea ↗
+                    </a>
+                  )}
+                </article>
+              ))}
+            </div>
+          )}
+
+          {!loading && !error && visibleCount < filteredCats.length && (
             <button
               type="button"
               className="load-more-cats"

@@ -1,53 +1,89 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
-/* ========================================
-   1. GLOBAL DESIGN SYSTEM
-======================================== */
+/* ==============================
+   GLOBAL RESET
+================================ */
 
-:root {
-  font-family: 'Space Grotesk', sans-serif;
-  color: #f3f0ff;
-  background: #09091a;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-
-  --bg: #09091a;
-  --panel: #111128;
-  --panel2: #171731;
-  --line: #302d50;
-  --muted: #a3a0c1;
-  --pink: #ff74d4;
-  --purple: #a78bfa;
-  --cyan: #6ee7f9;
-  --green: #7bf3bc;
-}
-
-* {
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
+/* ==============================
+   ROOT VARIABLES
+================================ */
+
+:root {
+  font-family: 'Space Grotesk', sans-serif;
+
+  color: #f4f5fa;
+  background: #0b1020;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --bg-primary: #0b1020;
+  --bg-secondary: #111a2d;
+  --bg-card: #172239;
+
+  --accent-primary: #a78bfa;
+  --accent-light: #c4b5fd;
+  --accent-mint: #70e1c1;
+
+  --text-primary: #f4f5fa;
+  --text-secondary: #9ba8bd;
+
+  --border-color: rgba(255, 255, 255, 0.09);
+
+  --container-width: 1200px;
+
+  --transition: 0.25s ease;
+}
+
+/* ==============================
+   HTML & BODY
+================================ */
+
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+  scroll-padding-top: 100px;
 }
 
 body {
-  margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at 15% 12%, #37235a2b, transparent 26%),
-    radial-gradient(circle at 85% 43%, #142f5124, transparent 30%), var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  background: var(--bg-primary);
+  color: var(--text-primary);
+
+  font-family: 'Space Grotesk', sans-serif;
+  line-height: 1.6;
 }
 
+/* ==============================
+   COMMON ELEMENTS
+================================ */
+
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 a {
@@ -55,1324 +91,85 @@ a {
   text-decoration: none;
 }
 
-button {
-  cursor: pointer;
+img,
+svg {
+  display: block;
 }
 
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 4px;
+img {
+  max-width: 100%;
 }
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+/* ==============================
+   SELECTION
+================================ */
 
 ::selection {
-  background: var(--pink);
-  color: #100c22;
+  background: var(--accent-primary);
+  color: #0b1020;
 }
 
-.section-wrap {
-  width: min(1120px, calc(100% - 48px));
-  margin-inline: auto;
-}
-
-.section-kicker {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  color: var(--cyan);
-  font:
-    8px 'Press Start 2P',
-    monospace;
-  line-height: 1.8;
-  letter-spacing: 0.04em;
-}
-
-.pixel-dot,
-.pulse-dot {
-  display: inline-block;
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  background: var(--green);
-  box-shadow: 0 0 12px #7bf3bc88;
-}
-
-.section-title {
-  margin: 18px 0;
-  font:
-    clamp(20px, 3vw, 32px)/1.6 'Press Start 2P',
-    monospace;
-  letter-spacing: -0.05em;
-}
-
-.section-title span,
-.community-inner h2 span {
-  color: var(--pink);
-  text-shadow: 3px 3px 0 #61366f;
-}
-
-.section-copy {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.8;
-}
-
-/* ========================================
-   2. HERO
-======================================== */
-
-.hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  gap: 38px;
-  min-height: 640px;
-  padding-top: 52px;
-  padding-bottom: 78px;
-}
-
-.hero-copy {
-  position: relative;
-  z-index: 2;
-  min-width: 0;
-}
-
-.hero-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 28px;
-  padding: 12px 14px;
-  border: 1px solid #37315d;
-  background: #13132b;
-  color: var(--cyan);
-  font:
-    8px 'Press Start 2P',
-    monospace;
-  line-height: 1.8;
-}
-
-.hero h1 {
-  margin: 0 0 24px;
-  font:
-    clamp(26px, 4vw, 48px)/1.5 'Press Start 2P',
-    monospace;
-  letter-spacing: -0.06em;
-  overflow-wrap: anywhere;
-}
-
-.hero h1 > span:first-of-type {
-  color: var(--pink);
-  text-shadow: 3px 3px 0 #61366f;
-}
-
-.title-period {
-  color: var(--cyan);
-}
-
-.hero-description {
-  max-width: 470px;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.8;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 30px;
-}
-
-.button-primary,
-.button-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 15px 17px;
-  font:
-    9px 'Press Start 2P',
-    monospace;
-  line-height: 1.8;
-  transition:
-    transform 0.15s,
-    box-shadow 0.15s;
-}
-
-.button-primary {
-  border: 1px solid var(--pink);
-  background: var(--pink);
-  color: #140e25;
-  box-shadow: 4px 4px 0 #7846a1;
-}
-
-.button-secondary {
-  border: 1px solid #4a456e;
-  background: var(--panel);
-  color: #e9e5ff;
-}
-
-.button-primary:hover,
-.button-secondary:hover {
-  transform: translate(-2px, -2px);
-}
-
-.hero-stats {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin-top: 44px;
-}
-
-.hero-stats > div {
-  display: grid;
-  grid-template-columns: 30px auto;
-  align-items: center;
-  column-gap: 8px;
-}
-
-.stat-icon {
-  display: grid;
-  grid-row: span 2;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  background: #282044;
-  color: var(--pink);
-}
-
-.site-logo-icon {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
-}
-
-.hero-stats strong {
-  font:
-    10px 'Press Start 2P',
-    monospace;
-}
-
-.hero-stats small {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 9px;
-}
-
-.hero-bottom-note {
-  position: absolute;
-  bottom: 22px;
-  left: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #8d89ac;
-  font:
-    7px/1.8 'Press Start 2P',
-    monospace;
-}
-
-.tiny-square {
-  width: 6px;
-  height: 6px;
-  flex-shrink: 0;
-  background: var(--pink);
-}
-
-/* ========================================
-   3. PIXEL CAT ART SUPPORT
-   PixelCatArt.jsx keeps its own artwork CSS.
-======================================== */
-
-.cat-scene {
-  position: relative;
-  width: 100%;
-  height: 470px;
-  overflow: hidden;
-  border: 1px solid #38305e;
-  background: linear-gradient(160deg, #171738, #1d1741 48%, #10142c);
-  box-shadow: 8px 8px 0 #211b3e;
-}
-
-.scene-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(#6c5ca51b 1px, transparent 1px),
-    linear-gradient(90deg, #6c5ca51b 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: linear-gradient(to bottom, black, transparent 95%);
-}
-
-.moon {
-  position: absolute;
-  top: 13%;
-  right: 15%;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  background: #ffe4a6;
-  box-shadow:
-    0 0 0 8px #ffe4a61b,
-    0 0 45px #ffe4a655;
-}
-
-.moon::after {
-  position: absolute;
-  inset: 12px 0 0 22px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #e5b7a5;
-  content: '';
-}
-
-.pixel-star {
-  position: absolute;
-  color: var(--cyan);
-  font-size: 23px;
-}
-
-.star-a {
-  top: 15%;
-  left: 17%;
-}
-.star-b {
-  top: 29%;
-  right: 15%;
-  color: var(--pink);
-}
-.star-c {
-  top: 45%;
-  left: 12%;
-  color: #ffe4a6;
-}
-
-.bubble {
-  position: absolute;
-  border: 2px solid #8eeaff;
-  border-radius: 50%;
-  box-shadow:
-    inset -5px -5px 0 #8eeaff22,
-    0 0 16px #8eeaff22;
-}
-
-.bubble-one {
-  top: 30%;
-  left: 20%;
-  width: 27px;
-  height: 27px;
-}
-
-.bubble-two {
-  top: 24%;
-  right: 14%;
-  width: 40px;
-  height: 40px;
-}
-
-.bubble-three {
-  top: 53%;
-  right: 20%;
-  width: 18px;
-  height: 18px;
-}
-
-.pixel-cat {
-  position: absolute;
-  top: 46%;
-  left: 50%;
-  width: 220px;
-  height: 250px;
-  transform: translate(-50%, -50%);
-  filter: drop-shadow(8px 10px 0 #08081966);
-}
-
-.cat-head {
-  position: absolute;
-  z-index: 2;
-  top: 38px;
-  left: 31px;
-  width: 158px;
-  height: 127px;
-  border: 5px solid #0b0b20;
-  background: #d9d5ff;
-  box-shadow: inset -8px -7px 0 #9b91dc;
-  image-rendering: pixelated;
-}
-
-.cat-ear {
-  position: absolute;
-  z-index: 1;
-  top: 13px;
-  width: 68px;
-  height: 69px;
-  border: 5px solid #0b0b20;
-  background: #d9d5ff;
-}
-
-.ear-left {
-  left: 29px;
-  clip-path: polygon(0 0, 100% 42%, 100% 100%, 30% 100%);
-}
-
-.ear-right {
-  right: 27px;
-  clip-path: polygon(0 42%, 100% 0, 70% 100%, 0 100%);
-}
-
-.cat-eye {
-  position: absolute;
-  top: 45px;
-  width: 13px;
-  height: 19px;
-  background: #15132b;
-  box-shadow: 3px 3px 0 #fff;
-}
-
-.eye-left {
-  left: 34px;
-}
-.eye-right {
-  right: 34px;
-}
-
-.cat-blush {
-  position: absolute;
-  top: 73px;
-  width: 21px;
-  height: 9px;
-  background: #ff83c9;
-}
-
-.blush-left {
-  left: 12px;
-}
-.blush-right {
-  right: 12px;
-}
-
-.cat-nose {
-  position: absolute;
-  top: 70px;
-  left: 73px;
-  width: 9px;
-  height: 6px;
-  background: #9c5caa;
-}
-
-.cat-mouth {
-  position: absolute;
-  top: 79px;
-  left: 72px;
-  width: 10px;
-  height: 9px;
-  border-bottom: 2px solid #25203f;
-  border-radius: 50%;
-}
-
-.cat-body {
-  position: absolute;
-  top: 149px;
-  left: 54px;
-  width: 113px;
-  height: 84px;
-  border: 5px solid #0b0b20;
-  border-radius: 30px 30px 12px 12px;
-  background: #c5baff;
-}
-
-.cat-belly {
-  position: absolute;
-  top: 13px;
-  left: 25px;
-  width: 45px;
-  height: 52px;
-  border-radius: 50%;
-  background: #eeeaff;
-}
-
-.cat-paw {
-  position: absolute;
-  z-index: 3;
-  top: 204px;
-  width: 45px;
-  height: 25px;
-  border: 5px solid #0b0b20;
-  background: #e4dfff;
-}
-
-.paw-left {
-  left: 43px;
-}
-.paw-right {
-  right: 39px;
-}
-
-.cat-tail {
-  position: absolute;
-  top: 167px;
-  right: 8px;
-  width: 45px;
-  height: 44px;
-  transform: rotate(13deg);
-  border: 12px solid #0b0b20;
-  border-bottom: 0;
-  border-left: 0;
-  border-radius: 0 35px 0 0;
-}
-
-.cat-collar {
-  position: absolute;
-  z-index: 4;
-  top: 159px;
-  left: 57px;
-  width: 108px;
-  height: 12px;
-  border: 3px solid #0b0b20;
-  background: var(--pink);
-}
-
-.scene-platform {
-  position: absolute;
-  z-index: 3;
-  bottom: 63px;
-  left: 50%;
-  width: 78%;
-  padding: 15px 5px;
-  transform: translateX(-50%);
-  border: 3px solid #8d70c9;
-  background: #15142f;
-  box-shadow: 5px 5px 0 #080819;
-  text-align: center;
-}
-
-.scene-platform span {
-  color: var(--pink);
-  font:
-    clamp(9px, 1.4vw, 14px) 'Press Start 2P',
-    monospace;
-}
-
-.scene-platform small {
-  display: block;
-  margin-top: 10px;
-  color: #b6b1d8;
-  font:
-    7px 'Press Start 2P',
-    monospace;
-}
-
-.scene-ground {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 40px;
-  border-top: 2px solid #51457b;
-  background: #171733;
-}
-
-/* ========================================
-   4. TICKER
-======================================== */
-
-.ticker {
-  overflow: hidden;
-  padding: 15px 0;
-  border-block: 1px solid #302744;
-  background: #111126;
-  white-space: nowrap;
-}
-
-.ticker > div {
-  min-width: max-content;
-  color: #d6d0f2;
-  font:
-    9px 'Press Start 2P',
-    monospace;
-  animation: marquee 34s linear infinite;
-}
-
-.ticker span {
-  padding: 0 27px;
-  color: var(--pink);
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-35%);
-  }
-}
-
-/* ========================================
-   5. MY CATS COLLECTION SECTION
-======================================== */
-
-.checker-section {
-  padding-block: 100px;
-  text-align: center;
-}
-
-.checker-section > .hero-description {
-  margin-inline: auto;
-}
-
-.checker-card {
-  max-width: 780px;
-  margin: 38px auto 0;
-  overflow: hidden;
-  border: 1px solid #49416f;
-  background: #101027;
-  box-shadow: 7px 7px 0 #211b3c;
-  text-align: left;
-}
-
-.checker-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 43px;
-  padding: 10px 15px;
-  border-bottom: 1px solid #373057;
-  background: #1a1837;
-  color: #b8b2d7;
-  font:
-    7px/1.8 'Press Start 2P',
-    monospace;
-}
-
-.checker-top > span:first-child {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.online-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px #7bf3bc66;
-}
-
-.my-cats-card {
-  max-width: 820px;
-}
-
-.my-cats-empty {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 48px 28px;
-  text-align: center;
-}
-
-.my-cats-icon {
-  display: grid;
-  place-items: center;
-  width: 82px;
-  height: 82px;
-  margin-bottom: 22px;
-  border: 1px solid #49416f;
-  background: #201a3a;
-  color: var(--pink);
-  box-shadow: 5px 5px 0 #35264e;
-}
-
-.my-cats-empty h3 {
-  margin: 0 0 16px;
-  color: #f3f0ff;
-  font:
-    12px/1.8 'Press Start 2P',
-    monospace;
-}
-
-.my-cats-empty p {
-  max-width: 480px;
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.8;
-}
+/* ==============================
+   SCROLLBAR
+================================ */
 
-.my-cats-features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 26px;
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.my-cats-features span {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px;
-  border: 1px solid #393254;
-  background: #17152d;
-  color: #d5c9ff;
-  font:
-    7px/1.8 'Press Start 2P',
-    monospace;
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
 }
 
-/* ========================================
-   6. ABOUT
-======================================== */
-
-.about-section {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  align-items: center;
-  gap: 80px;
-  padding-block: 90px;
-  border-top: 1px solid #28243e;
-}
-
-.about-art {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: 340px;
-  overflow: hidden;
-  border: 1px solid #353052;
-  background: radial-gradient(circle, #28204a 0, #111126 65%);
-}
-
-.about-orbit {
-  position: absolute;
-  width: 250px;
-  height: 250px;
-  border: 1px dashed #66558c;
-  border-radius: 50%;
-}
-
-.orbit-two {
-  width: 190px;
-  height: 190px;
-  transform: rotate(55deg);
-  border-color: #59456f;
-}
-
-.about-cat {
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 160px;
-  height: 160px;
-  border: 6px solid #09091a;
-  background: #d8ceff;
-  color: #1a1230;
-  box-shadow: 9px 9px 0 #7d5aab;
-}
-
-.about-spark {
-  position: absolute;
-  color: var(--pink);
-  font-size: 30px;
-}
-
-.spark-one {
-  top: 24%;
-  left: 20%;
-}
-
-.spark-two {
-  right: 18%;
-  bottom: 22%;
-  color: var(--cyan);
-}
-
-.about-tag {
-  position: absolute;
-  bottom: 17px;
-  left: 17px;
-  color: var(--cyan);
-  font:
-    7px 'Press Start 2P',
-    monospace;
-}
-
-.about-copy .section-kicker {
-  justify-content: flex-start;
-}
-
-.about-copy .section-title {
-  font-size: clamp(17px, 2.4vw, 26px);
-}
-
-.about-copy p {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.9;
-}
-
-.about-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 25px;
-}
-
-.about-tags span {
-  padding: 10px;
-  border: 1px solid #3a3159;
-  background: #15142c;
-  color: #d5c9ff;
-  font:
-    7px/1.8 'Press Start 2P',
-    monospace;
-}
-
-/* ========================================
-   7. ROADMAP
-======================================== */
-
-.roadmap-section {
-  padding-block: 90px;
-  border-top: 1px solid #28243e;
-}
-
-.roadmap-heading {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 35px;
-}
-
-.roadmap-heading .section-kicker {
-  justify-content: flex-start;
-}
-
-.roadmap-heading .section-title {
-  margin-bottom: 0;
-}
-
-.roadmap-heading > p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
-  text-align: right;
-}
-
-.roadmap-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.roadmap-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  min-height: 250px;
-  padding: 20px 16px;
-  border: 1px solid #302b4e;
-  background: #111128;
-  transition:
-    transform 0.2s,
-    border-color 0.2s;
-}
-
-.roadmap-card:hover {
-  transform: translateY(-4px);
-  border-color: #8e6cc4;
-}
-
-.roadmap-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--pink);
-}
-
-.roadmap-number {
-  color: #716b91;
-  font:
-    9px 'Press Start 2P',
-    monospace;
-}
-
-.roadmap-card h3 {
-  margin: 25px 0 13px;
-  font:
-    9px/1.9 'Press Start 2P',
-    monospace;
-}
-
-.roadmap-card p {
-  flex: 1;
-  margin: 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
-}
-
-.roadmap-status {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 20px;
-  color: #a6a0c6;
-  font:
-    6px/1.8 'Press Start 2P',
-    monospace;
-}
-
-.roadmap-status i {
-  width: 6px;
-  height: 6px;
-  flex-shrink: 0;
-  background: var(--green);
-  box-shadow: 0 0 8px #7bf3bc66;
-}
-
-.roadmap-disclaimer {
-  margin-top: 20px;
-  color: #6f6a8d;
-  font-size: 11px;
-  line-height: 1.8;
-}
-
-/* ========================================
-   8. COMMUNITY
-======================================== */
-
-.community-section {
-  border-block: 1px solid #3c315a;
-  background: linear-gradient(100deg, #17132e, #14142d 60%, #211633);
-}
-
-.community-inner {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding-block: 45px;
-}
-
-.community-cat {
-  display: grid;
-  place-items: center;
-  width: 58px;
-  height: 58px;
-  flex-shrink: 0;
-  background: var(--pink);
-  color: #160d25;
-  box-shadow: 5px 5px 0 #72499b;
-}
-
-.community-inner .section-kicker {
-  justify-content: flex-start;
-  font-size: 7px;
-}
-
-.community-copy {
-  min-width: 0;
-}
-
-.community-inner h2 {
-  font:
-    clamp(12px, 1.7vw, 18px)/1.8 'Press Start 2P',
-    monospace;
-}
-
-.community-inner p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-.community-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-left: auto;
-}
-
-.community-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 42px;
-  padding: 12px;
-  border: 1px solid #4a456e;
-  background: #111128;
-  color: var(--cyan);
-  font:
-    7px/1.8 'Press Start 2P',
-    monospace;
-  white-space: nowrap;
-  transition:
-    border-color 0.2s,
-    color 0.2s;
-}
-
-.community-links a:hover {
-  border-color: var(--pink);
-  color: var(--pink);
-}
-
-/* ========================================
-   9. FOOTER
-======================================== */
-
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding-block: 30px;
-  color: #8580a6;
-  font-size: 10px;
-}
-
-.footer-brand {
-  flex-shrink: 0;
-}
-
-.footer-logo {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-}
-
-.footer-heart {
-  color: var(--pink);
-}
-
-.footer-right {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.back-top {
-  color: var(--cyan);
-  font:
-    7px/1.8 'Press Start 2P',
-    monospace;
-}
-
-.back-top:hover {
-  color: var(--pink);
-}
-
-/* ========================================
-   10. TABLET
-======================================== */
-
-@media (max-width: 1000px) {
-  .hero {
-    gap: 24px;
-  }
-
-  .hero h1 {
-    font-size: clamp(24px, 3.6vw, 38px);
-  }
-
-  .hero-stats {
-    gap: 14px;
-  }
-
-  .about-section {
-    gap: 40px;
-  }
-
-  .roadmap-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .roadmap-card {
-    min-height: 220px;
-  }
-
-  .community-inner {
-    gap: 16px;
-  }
+::-webkit-scrollbar-thumb {
+  background: #303b53;
+  border-radius: 20px;
 }
-
-/* ========================================
-   11. MOBILE
-======================================== */
-
-@media (max-width: 760px) {
-  .section-wrap {
-    width: calc(100% - 32px);
-  }
-
-  .hero {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 35px;
-    min-height: auto;
-    padding-top: 50px;
-    padding-bottom: 75px;
-  }
-
-  .hero-pill {
-    max-width: 100%;
-    margin-bottom: 22px;
-    font-size: 7px;
-  }
-
-  .hero h1 {
-    font-size: clamp(22px, 6.2vw, 38px);
-    line-height: 1.6;
-  }
-
-  .hero-description {
-    font-size: 14px;
-  }
-
-  .hero-stats {
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 30px;
-  }
-
-  .hero-stats > div {
-    grid-template-columns: 25px auto;
-    gap: 6px;
-  }
-
-  .stat-icon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .hero-stats strong {
-    font-size: 7px;
-  }
-
-  .hero-stats small {
-    font-size: 7px;
-  }
 
-  .cat-scene {
-    width: 100%;
-    max-width: 470px;
-    height: 380px;
-    margin-inline: auto;
-  }
-
-  .scene-platform {
-    bottom: 52px;
-  }
-
-  .hero-bottom-note {
-    bottom: 20px;
-    font-size: 6px;
-  }
-
-  .ticker > div {
-    font-size: 8px;
-  }
-
-  .checker-section {
-    padding-block: 70px;
-  }
-
-  .section-title {
-    font-size: clamp(17px, 5vw, 25px);
-  }
-
-  .my-cats-empty {
-    padding: 35px 18px;
-  }
-
-  .my-cats-empty h3 {
-    font-size: 9px;
-  }
-
-  .my-cats-empty p {
-    font-size: 13px;
-  }
-
-  .my-cats-features {
-    align-items: stretch;
-    flex-direction: column;
-    width: 100%;
-    max-width: 290px;
-  }
-
-  .my-cats-features span {
-    justify-content: center;
-    font-size: 7px;
-  }
-
-  .about-section {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 35px;
-    padding-block: 65px;
-  }
-
-  .about-art {
-    height: 280px;
-  }
-
-  .about-copy .section-title {
-    font-size: clamp(17px, 5vw, 24px);
-  }
-
-  .roadmap-section {
-    padding-block: 65px;
-  }
-
-  .roadmap-heading {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .roadmap-heading > p {
-    margin: 0;
-    text-align: left;
-  }
-
-  .roadmap-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .roadmap-card {
-    min-height: 250px;
-    padding: 15px 12px;
-  }
-
-  .roadmap-card h3 {
-    font-size: 8px;
-  }
-
-  .roadmap-card p {
-    font-size: 11px;
-  }
-
-  .roadmap-status {
-    font-size: 5px;
-  }
-
-  .community-inner {
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 16px;
-    padding-block: 32px;
-  }
-
-  .community-cat {
-    width: 45px;
-    height: 45px;
-  }
-
-  .community-inner > div:nth-child(2) {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .community-inner h2 {
-    font-size: 11px;
-  }
-
-  .community-inner .section-kicker {
-    font-size: 6px;
-  }
-
-  .community-inner p {
-    font-size: 12px;
-    line-height: 1.7;
-  }
-
-  .community-links {
-    width: 100%;
-    margin-left: 0;
-    flex-direction: column;
-  }
-
-  .community-links a {
-    justify-content: center;
-  }
-
-  .footer {
-    flex-wrap: wrap;
-    gap: 18px;
-    padding-block: 22px;
-  }
-
-  .footer > span,
-  .back-top {
-    font-size: 6px;
-  }
-
-  .footer-right {
-    width: 100%;
-    justify-content: space-between;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
 }
-
-/* ========================================
-   12. SMALL PHONES
-======================================== */
-
-@media (max-width: 380px) {
-  .section-wrap {
-    width: calc(100% - 24px);
-  }
-
-  .hero h1 {
-    font-size: 21px;
-  }
-
-  .hero-actions > a,
-  .hero-actions > button {
-    width: 100%;
-  }
-
-  .hero-stats {
-    flex-wrap: wrap;
-  }
-
-  .roadmap-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .roadmap-card {
-    min-height: auto;
-  }
 
-  .my-cats-empty h3 {
-    font-size: 8px;
-  }
+/* ==============================
+   ACCESSIBILITY
+================================ */
 
-  .footer {
-    align-items: flex-start;
-  }
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
 }
 
-/* ========================================
-   13. ACCESSIBILITY
-======================================== */
+/* ==============================
+   RESPONSIVE
+================================ */
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation: none !important;
-    transition: none !important;
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 80px;
   }
 }
 html {
   scroll-behavior: smooth;
-}
-
-#my-cats {
-  scroll-margin-top: 24px;
+  scroll-padding-top: 100px;
 }
